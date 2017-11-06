@@ -253,7 +253,16 @@ public class AlexaService extends Service {
         }
         @Override
         public void handleMessage(Message msg) {
-            stopSelf(msg.arg1);
+            int command = msg.arg2;
+            switch (command){
+                case 0:
+                    Log.i(TAG,"handle command 0");
+                    break;
+                case 1:
+                    Log.i(TAG,"handle command 1");
+                    alexaManager.sendTextRequest("Hi", requestCallback);
+                    break;
+            }
         }
     }
     @Override
@@ -277,6 +286,7 @@ public class AlexaService extends Service {
         Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
         Message msg = mServiceHandler.obtainMessage();
         msg.arg1 = startId;
+        msg.arg2 = intent.getIntExtra("COMMAND",0);
         mServiceHandler.sendMessage(msg);
 
         // If we get killed, after returning from here, restart
