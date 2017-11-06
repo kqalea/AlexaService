@@ -34,8 +34,13 @@ import com.willblaschko.android.alexa.interfaces.speaker.AvsSetVolumeItem;
 import com.willblaschko.android.alexa.interfaces.speechrecognizer.AvsExpectSpeechItem;
 import com.willblaschko.android.alexa.interfaces.speechsynthesizer.AvsSpeakItem;
 
+import org.spongycastle.dvcs.VSDRequestBuilder;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by kqalea on 11/5/17.
@@ -257,11 +262,24 @@ public class AlexaService extends Service {
             switch (command){
                 case 0:
                     Log.i(TAG,"handle command 0");
+                    stopSelf();
                     break;
                 case 1:
                     Log.i(TAG,"handle command 1");
                     alexaManager.sendTextRequest("Hi", requestCallback);
                     break;
+                case 2:
+                    Log.i(TAG,"handle command 2");
+                    try {
+                        //open asset file
+                        InputStream is = getApplicationContext().getAssets().open("intros/joke.raw");
+                        byte[] fileBytes=new byte[is.available()];
+                        is.read(fileBytes);
+                        is.close();
+                        alexaManager.sendAudioRequest(fileBytes, requestCallback);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
             }
         }
     }
@@ -290,7 +308,7 @@ public class AlexaService extends Service {
         mServiceHandler.sendMessage(msg);
 
         // If we get killed, after returning from here, restart
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override

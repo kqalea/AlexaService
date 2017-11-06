@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,AlexaService.class);
         startService(intent);
 
-        final Button button = findViewById(R.id.login);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button login = findViewById(R.id.login);
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context mContext = getApplicationContext();
@@ -26,5 +26,25 @@ public class MainActivity extends AppCompatActivity {
                 startService(intent);
             }
         });
+        final Button joke = findViewById(R.id.joke);
+        joke.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context mContext = getApplicationContext();
+                Intent intent = new Intent(mContext, AlexaService.class);
+                intent.putExtra("COMMAND", 2);
+                startService(intent);
+            }
+        });
     }
+
+    @Override
+    protected void onDestroy() {
+        Context mContext = getApplicationContext();
+        Intent intent = new Intent(mContext, AlexaService.class);
+        intent.putExtra("COMMAND", 0);
+        super.onDestroy();
+
+    }
+
 }

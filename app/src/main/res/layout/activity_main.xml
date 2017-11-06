@@ -11,6 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="230dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="231dp" />
+
+    <Button
+        android:id="@+id/joke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Joke"
+        tools:layout_editor_absoluteX="112dp"
+        tools:layout_editor_absoluteY="231dp" />
 </android.support.constraint.ConstraintLayout>
